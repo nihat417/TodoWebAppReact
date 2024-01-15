@@ -17,8 +17,8 @@ export default function TodoCard() {
       </div>
       <div className="bg-gray-300 w-[560  px] h-[91px] ">
         <div className="flex justify-end">
-            <button className="flex justify-center m-5 mr-0 items-center bg-yellow-500 w-[99px]  h-[61px]  rounded-[5px] font-bold">Edit</button>
-            <button className="flex justify-center m-5 items-center bg-yellow-500 w-[124px] h-[61px]  rounded-[5px] font-bold">Delete</button>
+            <button className="flex justify-center m-5 mr-0 items-center bg-yellow-400 w-[99px]  h-[61px]  rounded-[5px] font-bold hover:bg-yellow-500">Edit</button>
+            <button className="flex justify-center m-5 items-center bg-yellow-400 w-[124px] h-[61px]  rounded-[5px] font-bold hover:bg-yellow-500">Delete</button>
         </div>
       </div>
     </div>

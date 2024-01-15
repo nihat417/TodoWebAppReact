@@ -1,12 +1,10 @@
-import React from "react";
-import LoginCard from "./login/components/LoginCard";
-import TodoCard from "./mainpage/components/TodoCard";
-import Header from "./mainpage/components/Header";
+import { useState } from "react";
+import Mainpage from "./mainpage/Mainpage";
+import Login from "./login/Login";
 
 export default function App() {
-  return (
-    <div className="flex h-screen justify-center items-center">
-      <Header/>
-    </div>
-  );
+  const [authorized, setAuthorized] = useState(false);
+  const [email, setEmail] = useState("");
+
+  return authorized ? <Mainpage setAuthorized={setAuthorized} email={email} /> : <Login setAuthorized={setAuthorized} email={email} setEmail={setEmail} />;
 }
