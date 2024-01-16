@@ -3,10 +3,7 @@ import { useState } from "react";
 function LoginCard({setAuthorized,email,setEmail}) {
   const [isValid, setIsValid] = useState(false);
   return (
-    <form
-      action=""
-      className="flex flex-col items-center w-[700px] h-[310px] shadow-md shadow-zinc-300 justify-center rounded-[13px]"
-    >
+    <form className="flex flex-col items-center w-[700px] h-[310px] shadow-md shadow-zinc-300 justify-center rounded-[13px]">
       <h1 className="text-3xl font-bold mb-5">LOGIN FORM</h1>
       <div className="flex flex-col">
         <label htmlFor="">Email:</label>
@@ -18,7 +15,7 @@ function LoginCard({setAuthorized,email,setEmail}) {
           required
           value={email}
           type="email"
-          className="border border-zinc-300 rounded-[6px] my-2"
+          className={`border border-zinc-300 rounded-[6px] my-2 ${email.length > 0 ? (isValid ? "bg-green-500" : "bg-red-500") : "border-zinc-300"}`}
         />
       </div>
 
