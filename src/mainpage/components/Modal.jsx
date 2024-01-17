@@ -3,7 +3,7 @@ import React from 'react';
 export default function Modal({ closeModal, modalType }) {
   return (
     
-    <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-99 '>
+    <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-99 bg-black bg-opacity-50 '>
       <form className={`flex flex-col items-center justify-center ${modalType === 'Delete' ? "w-[700px] h-[241px]" : "w-[700px] h-[350px]" } shadow shadow-zinc-700 bg-white rounded-[16px]`}>
       <div className='w-[100%] mt-[10px]'>
         <button

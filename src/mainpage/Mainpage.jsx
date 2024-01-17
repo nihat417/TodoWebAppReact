@@ -10,11 +10,13 @@ export default function Mainpage({ email, setAuthorized }) {
   const openModal = (e) => {
     setModalOpen(true);
     setModalType(e);
+    document.body.style.overflow = 'hidden';
   }
 
   const closeModal = () => {
     setModalOpen(false);
     setModalType("");
+    document.body.style.overflow = 'auto';
   }
 
   // const modalHandle = () => {
@@ -26,13 +28,16 @@ export default function Mainpage({ email, setAuthorized }) {
   return (
     <>
       <Header email={email} setAuthorized={setAuthorized} />
-      <button className="bg-yellow-400 py-3 px-10 font-bold rounded-[8px] hover:bg-yellow-500 ml-[68px] mt-[20px]" onClick={()=>openModal("Create")}>
-        Create card
-      </button>
+      <div className="flex">
+        <button className="bg-yellow-400 hover:bg-yellow-500 my-[20px] ml-[20px] py-2 px-4 sm:ml-[30px] sm:py-3 sm:px-10 font-bold rounded-[8px]" onClick={()=>openModal("Create")}>
+          Create card
+        </button>
+      </div>
       
       {isModalOpen && (<Modal closeModal={closeModal} modalType={modalType}/>)}
 
-      <div className="flex flex-wrap justify-around px-[50px]">
+      <div className="flex flex-wrap justify-center">
+        <TodoCard openModal={openModal} />
         <TodoCard openModal={openModal} />
         <TodoCard openModal={openModal} />
         <TodoCard openModal={openModal} />
