@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import LoginCard from './components/LoginCard'
 
-function Login({ setAuthorized, email, setEmail }) {
+function Login() {
   return (
     <div className='flex justify-center items-center h-screen'>
-        <LoginCard email={email} setEmail={setEmail} setAuthorized={setAuthorized} />
+        <LoginCard/>
     </div>
         
   )

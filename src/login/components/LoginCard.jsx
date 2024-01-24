@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import Context from "../../ContextWrapper";
 
-function LoginCard({setAuthorized,email,setEmail}) {
+function LoginCard() {
+  const {setAuthorized,email,setEmail} = useContext(Context);
   const [isValid, setIsValid] = useState(false);
+
   return (
     <form className="flex flex-col items-center px-[100px] py-[50px] sm:px-[200px] py-[100px] md:px-[250px] py-[150px] shadow-md shadow-zinc-300 justify-center rounded-[13px]">
       <h1 className="text-3xl font-bold mb-5">LOGIN FORM</h1>
       <div className="flex flex-col">
         <label className="font-bold">Email:</label>
         <input
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setIsValid(e.target.checkValidity());
-          }}
+          onChange={(e) => {setEmail(e.target.value);setIsValid(e.target.checkValidity());}}
           required
           value={email}
           type="email"
@@ -20,14 +20,11 @@ function LoginCard({setAuthorized,email,setEmail}) {
       </div>
 
       <button
-        onClick={() => {
-          isValid ? setAuthorized(true) : null;
-        }}
+        onClick={() => {isValid ? setAuthorized(true) : null;}}
         className={`${
           isValid
             ? "bg-yellow-500 hover:bg-yellow-700"
-            : "bg-[#D7D7D7] pointer-events-none"
-        } py-2 px-4 rounded-[10px]`}
+            : "bg-[#D7D7D7] pointer-events-none"} py-2 px-4 rounded-[10px]`}
         type="submit"
         disabled={!isValid}
       >

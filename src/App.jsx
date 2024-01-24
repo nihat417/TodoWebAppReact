@@ -1,10 +1,11 @@
-import React,{ useState } from "react";
+import { useContext } from "react";
+import Context from "./ContextWrapper";
 import Mainpage from "./mainpage/Mainpage";
 import Login from "./login/Login";
 
 export default function App() {
-  const [authorized, setAuthorized] = useState(false);
-  const [email, setEmail] = useState("");
+  const { authorized } = useContext(Context);
 
-  return authorized ? <Mainpage setAuthorized={setAuthorized} email={email} /> : <Login setAuthorized={setAuthorized} email={email} setEmail={setEmail} />;
+  return authorized ? <Mainpage/> : <Login/>;
+  
 }

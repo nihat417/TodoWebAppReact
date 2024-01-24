@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const Modal = ({ closeModal, modalType, modalHandle, email, selectedCard, setTitle, setDescription }) => {
+const Modal = ({ closeModal, modalType, modalHandle, email, selectedCard }) => {
   const [title, setTitleLocal] = useState('');
   const [description, setDescriptionLocal] = useState('');
 
@@ -66,7 +66,6 @@ const Modal = ({ closeModal, modalType, modalHandle, email, selectedCard, setTit
               value={title}
               onChange={(e) => {
                 setTitleLocal(e.target.value);
-                setTitle(e.target.value);
               }}
             />
             <label htmlFor='' className='text-zinc-600'>
@@ -78,7 +77,6 @@ const Modal = ({ closeModal, modalType, modalHandle, email, selectedCard, setTit
               value={description}
               onChange={(e) => {
                 setDescriptionLocal(e.target.value);
-                setDescription(e.target.value);
               }}
             />
             <div className='flex justify-end h-[20%] items-center mt-[20px]'>

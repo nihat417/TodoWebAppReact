@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TodoCard from "./components/TodoCard";
 import Header from "./components/Header";
 import Modal from "./components/Modal";
+import Context from "../ContextWrapper";
 
-export default function Mainpage({ email, setAuthorized }) {
+export default function Mainpage() {
+  const { email, setAuthorized } = useContext(Context)
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
   const [cards, setCards] = useState([]);
   const [filterCards, setFilterCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [title, setTitle] = useState(''); 
-  const [description, setDescription] = useState('');
 
   useEffect(() => {
     setFilterCards(cards.filter((card) => card.author === email));
@@ -35,21 +35,16 @@ export default function Mainpage({ email, setAuthorized }) {
       console.log('New Card:', newCard);
       setCards([...cards, newCard]);
       closeModal();
-    } 
-    else if (modalType === 'Edit') {
-      if (selectedCard) {
+    } else if (modalType === 'Edit' && selectedCard) {
         const updatedCards = cards.map((card) =>
           card.id === selectedCard.id ? newCard : card
         );
         setCards(updatedCards);
         closeModal();
-      }
-    } else if (modalType === 'Delete') {
-      if (selectedCard) {
+    } else if (modalType === 'Delete' && selectedCard) {
         const updatedCards = cards.filter((card) => card.id !== selectedCard.id);
         setCards(updatedCards);
         closeModal();
-      }
     }
   };
 
@@ -62,7 +57,7 @@ export default function Mainpage({ email, setAuthorized }) {
         </button>
       </div>
 
-      {isModalOpen && (<Modal closeModal={closeModal} setTitle={setTitle} modalType={modalType} setDescription={setDescription} modalHandle={modalHandle} email={email} selectedCard={selectedCard} />)}
+      {isModalOpen && (<Modal closeModal={closeModal} modalType={modalType} modalHandle={modalHandle} email={email} selectedCard={selectedCard} />)}
 
       <div className="flex flex-wrap justify-center">
         {filterCards.length ? (
