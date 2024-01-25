@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const Modal = ({ closeModal, modalType, modalHandle, email, selectedCard }) => {
+
   const [title, setTitleLocal] = useState('');
   const [description, setDescriptionLocal] = useState('');
 
@@ -12,7 +13,6 @@ const Modal = ({ closeModal, modalType, modalHandle, email, selectedCard }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (modalType === 'Create') {
       const newCard = {
         id: uuidv4(),
@@ -34,6 +34,7 @@ const Modal = ({ closeModal, modalType, modalHandle, email, selectedCard }) => {
       closeModal(false);
     }
   };
+
 
   return (
     <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center z-99 bg-black bg-opacity-50 '>

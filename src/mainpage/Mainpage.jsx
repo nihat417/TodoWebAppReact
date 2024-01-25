@@ -12,6 +12,16 @@ export default function Mainpage() {
   const [filterCards, setFilterCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
 
+
+  useEffect(()=>{
+    const getcards = async ()=>{
+      const request = await fetch(`http://localhost:3000/cards/${email}`);
+      const response = await request.json();
+      setCards(response);
+    }
+    getcards();
+  },[cards]);
+
   useEffect(() => {
     setFilterCards(cards.filter((card) => card.author === email));
   }, [cards, email]);
@@ -30,23 +40,71 @@ export default function Mainpage() {
     document.body.style.overflow = 'auto';
   }
 
+  const createCard = async (newCard)=>{
+    try {
+      const request = await fetch("http://localhost:3000/cards",
+      {
+        method:"Post",
+        mode : 'cors',
+        body: JSON.stringify(newCard),
+        headers : {"Content-type": "application/json"}});
+      const response = await request.json();
+      setCards([...cards, response]);
+      console.log(response);
+      closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const editCard = async (newCard)=>{
+    try {
+      const request = await fetch(`http://localhost:3000/cards/${selectedCard._id}`, 
+      {
+        method :'Put',
+        mode : "cors",
+        body : JSON.stringify(newCard),
+        headers :{"Content-type": "application/json"}});
+        
+        const response = await request.json();
+        setCards((prevCards) => prevCards.map((card) => (card.id === selectedCard.id ? response : card)));
+        closeModal();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  const deleteCard = async ()=>{
+    try {
+      const request = await fetch(`http://localhost:3000/cards/${selectedCard._id}`,
+      {
+        method :'Delete',
+        mode:"cors"
+      })
+      const response = await request.json();
+      setCards((prevCards) => prevCards.filter((card) => (card.id !== selectedCard.id ? response : card)));
+      closeModal();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   const modalHandle = (newCard) => {
     if (modalType === 'Create') {
       console.log('New Card:', newCard);
-      setCards([...cards, newCard]);
-      closeModal();
+      createCard(newCard);
     } else if (modalType === 'Edit' && selectedCard) {
-        const updatedCards = cards.map((card) =>
-          card.id === selectedCard.id ? newCard : card
-        );
-        setCards(updatedCards);
-        closeModal();
+        editCard(newCard);
     } else if (modalType === 'Delete' && selectedCard) {
-        const updatedCards = cards.filter((card) => card.id !== selectedCard.id);
-        setCards(updatedCards);
-        closeModal();
+        deleteCard();
     }
   };
+
+
+
 
   return (
     <div>
@@ -62,7 +120,7 @@ export default function Mainpage() {
       <div className="flex flex-wrap justify-center">
         {filterCards.length ? (
           filterCards.map((card) => (
-            <TodoCard key={card.id} openModal={openModal} card={card} />
+             <TodoCard key={card.id} openModal={openModal} card={card} />
           ))
         ) : (<p className="text-center col-span-3 mt-10">No Cards Found</p>)}
       </div>
