@@ -5,26 +5,13 @@ import Modal from "./components/Modal";
 import Context from "../ContextWrapper";
 
 export default function Mainpage() {
-  const { email, setAuthorized } = useContext(Context)
+  const { email, setAuthorized ,cards, setCards , getcards} = useContext(Context)
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState('');
-  const [cards, setCards] = useState([]);
-  const [filterCards, setFilterCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
 
 
-  useEffect(()=>{
-    const getcards = async ()=>{
-      const request = await fetch(`http://localhost:3000/cards/${email}`);
-      const response = await request.json();
-      setCards(response);
-    }
-    getcards();
-  },[cards]);
-
-  useEffect(() => {
-    setFilterCards(cards.filter((card) => card.author === email));
-  }, [cards, email]);
+  useEffect(()=>{getcards();},[cards]);
 
   const openModal = (e, card) => {
     setModalOpen(true);
@@ -74,7 +61,6 @@ export default function Mainpage() {
     }
   }
 
-
   const deleteCard = async ()=>{
     try {
       const request = await fetch(`http://localhost:3000/cards/${selectedCard._id}`,
@@ -82,19 +68,20 @@ export default function Mainpage() {
         method :'Delete',
         mode:"cors"
       })
-      const response = await request.json();
-      setCards((prevCards) => prevCards.filter((card) => (card.id !== selectedCard.id ? response : card)));
-      closeModal();
-      console.log(response);
+      if(request.ok){
+        const response = await request.json();
+        setCards((prevCards) => prevCards.filter((card) => (card.id !== selectedCard.id ? response : card)));
+        closeModal();
+        console.log(response);
+      }
+      console.error('Delete request failed:', request.status);
     } catch (error) {
       console.log(error);
     }
   }
 
-
   const modalHandle = (newCard) => {
     if (modalType === 'Create') {
-      console.log('New Card:', newCard);
       createCard(newCard);
     } else if (modalType === 'Edit' && selectedCard) {
         editCard(newCard);
@@ -102,9 +89,6 @@ export default function Mainpage() {
         deleteCard();
     }
   };
-
-
-
 
   return (
     <div>
@@ -117,9 +101,9 @@ export default function Mainpage() {
 
       {isModalOpen && (<Modal closeModal={closeModal} modalType={modalType} modalHandle={modalHandle} email={email} selectedCard={selectedCard} />)}
 
-      <div className="flex flex-wrap justify-center">
-        {filterCards.length ? (
-          filterCards.map((card) => (
+      <div className='grid lg:grid-cols-3 md:grid-cols-2 p-10'>
+        {cards.length ? (
+          cards.map((card) => (
              <TodoCard key={card.id} openModal={openModal} card={card} />
           ))
         ) : (<p className="text-center col-span-3 mt-10">No Cards Found</p>)}
