@@ -1,5 +1,5 @@
 import React from 'react'
-import '../style/mainstyle.css';
+// import '../style/mainstyle.css';
 
 export default function NotFound() {
   return (

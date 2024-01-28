@@ -1,9 +1,12 @@
 import { useContext, useState } from "react";
 import Context from "../../ContextWrapper";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function LoginCard() {
   const {setAuthorized,email,setEmail} = useContext(Context);
   const [isValid, setIsValid] = useState(false);
+  const navigate = useNavigate();
+  
 
   return (
     <form className="flex flex-col items-center px-[100px] py-[50px] sm:px-[200px] py-[100px] md:px-[250px] py-[150px] shadow-md shadow-zinc-300 justify-center rounded-[13px]">
@@ -20,7 +23,10 @@ function LoginCard() {
       </div>
 
       <button
-        onClick={() => {isValid ? setAuthorized(true) : null;}}
+        onClick={() => {
+          isValid ? setAuthorized(true) : null;
+          isValid ? navigate("/mainpage") : navigate("/login");
+        }}
         className={`${
           isValid
             ? "bg-yellow-500 hover:bg-yellow-700"
