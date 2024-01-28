@@ -7,6 +7,10 @@ body {
   margin: 0;
 }
 
+h1{
+  color: #fff;
+}
+
 
 body > main > center > p {
   color: #ddd;
